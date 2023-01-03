@@ -12,9 +12,9 @@ namespace registration.Data.Context
     {
         public registrationDbContext(DbContextOptions options) : base  (options) { }
 
-        DbSet<Product> Products { get; set; }
-        DbSet<Address> Addresses { get; set; }
-        DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

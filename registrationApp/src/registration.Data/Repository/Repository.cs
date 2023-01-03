@@ -16,6 +16,12 @@ namespace registration.Data.Repository
         protected readonly registrationDbContext Db;
         protected readonly DbSet<TEntity> DbSet;
 
+        protected Repository(registrationDbContext db)
+        {
+            Db = db;
+            DbSet = db.Set<TEntity>();
+        }
+
         public virtual async Task CreateAsync(TEntity entity)
         {
             DbSet.Add(entity);
