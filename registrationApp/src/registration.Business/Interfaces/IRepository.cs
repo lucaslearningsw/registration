@@ -13,7 +13,7 @@ namespace registration.Business.Interfaces
     {
         Task CreateAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);   
-        Task DeleteAsync(TEntity entity);  
+        Task DeleteAsync(Guid id);  
         Task<IEnumerable<TEntity>> GetAllAsync();
 
         Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
