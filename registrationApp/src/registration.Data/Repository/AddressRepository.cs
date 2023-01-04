@@ -1,4 +1,5 @@
 ﻿using BasicMVC.Models;
+using Microsoft.EntityFrameworkCore;
 using registration.Business.Interfaces;
 using registration.Data.Context;
 using System;
@@ -15,9 +16,10 @@ namespace registration.Data.Repository
         {
 
         }
-        public Task<Address> GetAddressBySupplier(Guid supplierId)
+        public async Task<Address> GetAddressBySupplier(Guid supplierId)
         {
-            throw new NotImplementedException();
+            return await Db.Addresses.AsNoTracking().
+                FirstOrDefaultAsync(s => s.SupplierId == supplierId);
         }
     }
 }
