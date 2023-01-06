@@ -15,7 +15,7 @@ namespace registration.Data.Repository
     {
         public SupplierRepository(registrationDbContext dbContext) : base(dbContext){ }
       
-        public async Task<Supplier> GetAllProductsBySupplierWithAddress(Guid id)
+        public async Task<Supplier> GetProductsSupplierAddress(Guid id)
         {
 
             return await Db.Suppliers.AsNoTracking()
@@ -24,7 +24,7 @@ namespace registration.Data.Repository
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<Supplier> GetSupplierByAddress(Guid id)
+        public async Task<Supplier> GetSupplierAddress(Guid id)
         {
             return await Db.Suppliers.AsNoTracking()
                 .Include(s => s.Address)

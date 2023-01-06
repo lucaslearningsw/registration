@@ -21,10 +21,12 @@ namespace registration.Data.Repository
             return await Find(p => p.SupplierId == supplierID);
         }
 
-        public async Task<IEnumerable<Product>> GetProductsBySuppilers()
+        public async Task<IEnumerable<Product>> GetProductsSuppilers()
         {
             return await Db.Products.AsNoTracking().Include(s => s.SupplierId).OrderBy(p => p.Name).ToListAsync();
         }
+
+       
 
         public async Task<Product> GetProductSupplier(Guid productID)
         {

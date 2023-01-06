@@ -6,6 +6,9 @@ namespace resgistration.App.ViewModels
 {
     public class AddressViewModel
     {
+        [Key]
+        public Guid Id { get; set; }
+
         [HiddenInput]
         public Guid SupplierId { get; set; }
 

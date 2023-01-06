@@ -9,7 +9,7 @@ namespace registration.Business.Interfaces
 {
     public interface ISupplierRepository : IRepository<Supplier>
     {
-        Task<Supplier> GetSupplierByAddress(Guid id);
-        Task<Supplier> GetAllProductsBySupplierWithAddress(Guid id);
+        Task<Supplier> GetSupplierAddress(Guid id);
+        Task<Supplier> GetProductsSupplierAddress(Guid id);
     }
 }
