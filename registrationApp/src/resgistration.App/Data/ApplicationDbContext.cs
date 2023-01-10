@@ -10,7 +10,7 @@ namespace resgistration.App.Data
             : base(options)
         {
         }
-        public DbSet<resgistration.App.ViewModels.ProductViewModel> ProductViewModel { get; set; }
-       
+        
+
     }
 }

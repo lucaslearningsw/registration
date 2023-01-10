@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<resgistration.App.ViewModels.SupplierViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Fornecedores";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-info" asp-action="Create">Novo Fornecedor</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-hover">
+   <thead class="table-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -19,16 +19,14 @@
                 @Html.DisplayNameFor(model => model.Document)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SupplierType)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Active)
             </th>
             <th></th>
+  
         </tr>
+
     </thead>
-    <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -37,17 +35,14 @@
                 @Html.DisplayFor(modelItem => item.Document)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SupplierType)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Active)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+            <td class="text-right">
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.id"><spam class="fa fa-search"></spam></a>
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.id"><spam class="fa fa-pencil-alt"></a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.id"><spam class="fa fa-trash"></a>
             </td>
         </tr>
 }
-    </tbody>
+  
 </table>

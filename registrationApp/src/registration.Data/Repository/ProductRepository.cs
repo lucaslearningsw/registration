@@ -23,7 +23,7 @@ namespace registration.Data.Repository
 
         public async Task<IEnumerable<Product>> GetProductsSuppilers()
         {
-            return await Db.Products.AsNoTracking().Include(s => s.SupplierId).OrderBy(p => p.Name).ToListAsync();
+            return await Db.Products.AsNoTracking().Include(s => s.Supplier).ToListAsync();
         }
 
        

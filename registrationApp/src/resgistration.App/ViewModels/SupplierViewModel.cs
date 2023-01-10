@@ -12,6 +12,8 @@ namespace resgistration.App.ViewModels
         [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracters", MinimumLength = 2)]
         public string Name { get; set; }
 
+
+        [Display(Name = "Documento")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(14, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracters", MinimumLength = 11)]
         public string Document { get; set; }
