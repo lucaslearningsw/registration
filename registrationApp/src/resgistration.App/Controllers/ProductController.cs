@@ -80,7 +80,7 @@ namespace resgistration.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,  ProductViewModel productViewModel)
         {
-            if (id != productViewModel.id) return NotFound();
+            if (id != productViewModel.Id) return NotFound();
 
             if (!ModelState.IsValid) return View(productViewModel);
 

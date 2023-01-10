@@ -73,7 +73,7 @@ namespace resgistration.App.Controllers
         public async Task<IActionResult> Edit(Guid id,SupplierViewModel supplierViewModel)
         {
 
-            if (id != supplierViewModel.id) return NotFound();
+            if (id != supplierViewModel.Id) return NotFound();
 
             if (!ModelState.IsValid) return View(supplierViewModel);
 
