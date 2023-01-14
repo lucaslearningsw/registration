@@ -49,7 +49,7 @@ namespace resgistration.App.Controllers
         public async Task <IActionResult> Create()
         {
             var productViewModel = await FillSuppliers(new ProductViewModel());
-            return View(productViewModel);
+            return View(productViewModel);  
         }
 
         [HttpPost]
@@ -59,9 +59,37 @@ namespace resgistration.App.Controllers
             productViewModel = await FillSuppliers(productViewModel);
             if (!ModelState.IsValid) return View(productViewModel);
 
+            var imgId = Guid.NewGuid() + "_";
+            if(!await UploadFile(productViewModel.ImagemUpload, imgId))
+            {
+                return View(productViewModel);
+            }
+
+            productViewModel.Image = imgId + productViewModel.ImagemUpload.FileName;
+
             await _productRepository.CreateAsync(_mapper.Map<Product>(productViewModel));
 
-            return View(productViewModel);
+            return RedirectToAction("Index");
+        }
+
+        private async Task<bool> UploadFile(IFormFile imagemUpload, string imgId)
+        {
+            if (imagemUpload.Length <= 0) return false;
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", imgId + imagemUpload.FileName);
+
+            if(System.IO.File.Exists(path))
+            {
+                ModelState.AddModelError(string.Empty, "Já existe um arquivo com este nome!");
+                return false;
+            }
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await imagemUpload.CopyToAsync(stream);
+            }
+
+            return true;
         }
 
         public async Task<IActionResult> Edit(Guid id)

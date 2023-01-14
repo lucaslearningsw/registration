@@ -45,4 +45,8 @@
     <UpToDateCheckInput Remove="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\imagens\" />
+  </ItemGroup>
+
 </Project>
