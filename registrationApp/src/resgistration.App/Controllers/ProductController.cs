@@ -37,7 +37,7 @@ namespace resgistration.App.Controllers
 
         public async Task<IActionResult> Details(Guid id)
         {
-            var productViewModel = GetProduct(id);
+            var productViewModel = await GetProduct(id);
             if (productViewModel == null)
             {
                 return NotFound();
@@ -72,25 +72,7 @@ namespace resgistration.App.Controllers
             return RedirectToAction("Index");
         }
 
-        private async Task<bool> UploadFile(IFormFile imagemUpload, string imgId)
-        {
-            if (imagemUpload.Length <= 0) return false;
-
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", imgId + imagemUpload.FileName);
-
-            if(System.IO.File.Exists(path))
-            {
-                ModelState.AddModelError(string.Empty, "Já existe um arquivo com este nome!");
-                return false;
-            }
-
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await imagemUpload.CopyToAsync(stream);
-            }
-
-            return true;
-        }
+       
 
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -141,9 +123,30 @@ namespace resgistration.App.Controllers
             return RedirectToAction("index");
         }
 
+
+        private async Task<bool> UploadFile(IFormFile imagemUpload, string imgId)
+        {
+            if (imagemUpload.Length <= 0) return false;
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", imgId + imagemUpload.FileName);
+
+            if (System.IO.File.Exists(path))
+            {
+                ModelState.AddModelError(string.Empty, "Já existe um arquivo com este nome!");
+                return false;
+            }
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await imagemUpload.CopyToAsync(stream);
+            }
+
+            return true;
+        }
+
         private async Task<ProductViewModel> GetProduct(Guid id)
         {
-            var product = _mapper.Map<ProductViewModel>(_productRepository.GetProductSupplier(id));
+            var product = _mapper.Map<ProductViewModel>(await _productRepository.GetProductSupplier(id));
             product.Suppliers = _mapper.Map<IEnumerable<SupplierViewModel>>(await _supplierRepository.GetAllAsync());
 
             return product;

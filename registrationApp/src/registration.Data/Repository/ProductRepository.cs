@@ -23,15 +23,17 @@ namespace registration.Data.Repository
 
         public async Task<IEnumerable<Product>> GetProductsSuppilers()
         {
-            return await Db.Products.AsNoTracking().Include(s => s.Supplier).ToListAsync();
+            return await Db.Products.AsNoTracking().Include(s => s.Supplier).
+                OrderBy(p => p.Name).ToListAsync();
+               
         }
 
        
 
-        public async Task<Product> GetProductSupplier(Guid productID)
+        public async Task<Product> GetProductSupplier(Guid id)
         {
-            return await Db.Products.AsNoTracking().Include(s => s.SupplierId)
-               .FirstOrDefaultAsync(p => p.Id == productID);
+            return await Db.Products.AsNoTracking().Include(s => s.Supplier)
+               .FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

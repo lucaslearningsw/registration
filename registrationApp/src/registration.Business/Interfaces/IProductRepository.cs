@@ -12,6 +12,6 @@ namespace registration.Business.Interfaces
         Task<IEnumerable<Product>> GetProductsBySuppiler(Guid supplierID);
 
         Task<IEnumerable<Product>> GetProductsSuppilers();
-        Task<Product> GetProductSupplier(Guid productID);
+        Task<Product> GetProductSupplier(Guid id);
     }
 }
