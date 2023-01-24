@@ -1,5 +1,6 @@
 ﻿
 
+using resgistration.App.Extensions;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -27,7 +28,10 @@ namespace resgistration.App.ViewModels
         public IFormFile ImagemUpload { get; set; }
         public string Image { get; set; }
 
+
+        [Coin]
         [Display(Name = "Preço")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public decimal Price { get; set; }
 
         [ScaffoldColumn(false)]
