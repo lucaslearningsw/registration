@@ -1,0 +1,69 @@
+﻿ @model resgistration.App.ViewModels.SupplierViewModel
+
+<div style="padding-top: 20px">
+    <div>
+        <hr />
+        <h4>Endereço</h4>
+    </div>
+
+    @if (Model != null)
+    {
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address.Number)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address.Complement)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address.District)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address.Cep)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address.City)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address.State)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(model => model.Address.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Address.Complement)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Address.District)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Address.Cep)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Address.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(model =>  model.Address.State)
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+        </table>
+    }
+
+</div>
+
+<script>
+    SetModal();
+</script>
+

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<resgistration.App.ViewModels.SupplierViewModel>
+﻿@using resgistration.App.Extensions;
+@model IEnumerable<resgistration.App.ViewModels.SupplierViewModel>
 
 @{
     ViewData["Title"] = "Lista de Fornecedores";
@@ -32,7 +33,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Document)
+                @this.DocumentFormart(item.SupplierType, item.Document)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Active)
