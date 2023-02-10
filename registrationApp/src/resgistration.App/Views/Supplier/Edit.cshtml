@@ -53,6 +53,11 @@
     <partial name="_AddressDetails" />
 </div>
 
+<h4>Produtos</h4>
+<div>
+    <partial name="../Product/_ProductList" model="@Model.Products"/>
+</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
