@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 
 namespace resgistration.App.Configurations
 {
@@ -29,5 +30,6 @@ namespace resgistration.App.Configurations
 
             return services;
         }
+
     }
 }

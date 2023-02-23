@@ -30,11 +30,13 @@ namespace resgistration.App.Controllers
         }
 
 
+        [Route("lista-produto")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<ProductViewModel>>(await _productRepository.GetProductsSuppilers()));
         }
 
+        [Route("detalhes-produtos/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
             var productViewModel = await GetProduct(id);
@@ -46,12 +48,14 @@ namespace resgistration.App.Controllers
             return View(productViewModel);
         }
 
+        [Route("novo-produto")]
         public async Task <IActionResult> Create()
         {
             var productViewModel = await FillSuppliers(new ProductViewModel());
             return View(productViewModel);  
         }
 
+        [Route("novo-produto")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductViewModel productViewModel)
@@ -72,8 +76,8 @@ namespace resgistration.App.Controllers
             return RedirectToAction("Index");
         }
 
-       
 
+        [Route("editar-produto/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var productViewModel = await GetProduct(id);
@@ -86,6 +90,7 @@ namespace resgistration.App.Controllers
             return View(productViewModel);
         }
 
+        [Route("editar-produto/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,  ProductViewModel productViewModel)
@@ -119,6 +124,8 @@ namespace resgistration.App.Controllers
             return RedirectToAction("index");
         }
 
+
+        [Route("excluir-produto/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var product = await GetProduct(id);
@@ -129,6 +136,7 @@ namespace resgistration.App.Controllers
 
         }
 
+        [Route("excluir-produto/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

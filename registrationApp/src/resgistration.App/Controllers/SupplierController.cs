@@ -21,11 +21,13 @@ namespace resgistration.App.Controllers
             _addressRepo = addressRepo;
         }
 
+        [Route("lista-de-fornecedores")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<SupplierViewModel>>(await _supplierRepo.GetAllAsync()));
         }
 
+        [Route("dados-do-fornecedor/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
             var supplierViewModel = await GetSupplierAddress(id);
@@ -38,11 +40,13 @@ namespace resgistration.App.Controllers
             return View(supplierViewModel);
         }
 
+        [Route("novo-fornecedor")]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Route("novo-fornecedor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SupplierViewModel supplierViewModel)
@@ -58,6 +62,7 @@ namespace resgistration.App.Controllers
 
         }
 
+        [Route("editar-fornecedor/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var supplierViewModel = await GetProductsSupplierAddress(id);
@@ -99,6 +104,8 @@ namespace resgistration.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("excluir-fornecedor/{id:guid}")]
+
         public async Task<IActionResult> Delete(Guid id)
         {
 
@@ -112,7 +119,8 @@ namespace resgistration.App.Controllers
             return View(supplierViewModel);
         }
 
-  
+    
+        [Route("excluir-fornecedor/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -126,6 +134,9 @@ namespace resgistration.App.Controllers
         }
 
 
+
+        [Route("atualizar-endereco-fornecedor/{id:guid}")]
+
         public async Task<IActionResult> UpdateAddress(Guid id)
         {
             var supplier = await GetProductsSupplierAddress(id);
@@ -135,6 +146,7 @@ namespace resgistration.App.Controllers
             return PartialView("_UpdateAddress", new SupplierViewModel { Address = supplier.Address });
         }
 
+        [Route("atualizar-endereco-fornecedor/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateAddress(SupplierViewModel supplierViewModel)
