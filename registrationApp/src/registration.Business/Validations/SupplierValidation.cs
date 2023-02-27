@@ -1,5 +1,6 @@
 ﻿using BasicMVC.Models;
 using FluentValidation;
+using registration.Business.Validations.Documents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,18 @@ namespace registration.Business.Validations
 
             When(s => s.SupplierType == SupplierType.PhysicalPerson, () =>
             {
-
+                RuleFor(s => s.Document.Length).Equal(CpfValidacao.LengthCpf)
+               .WithMessage("O campo Documento precisa ter {ComparisonValue} caracteres e foi fornecido {PropertyValue}.");
+                RuleFor(s => CpfValidacao.Validate(s.Document)).Equal(true)
+                .WithMessage("O documento fornecido é inválido.");
             });
 
             When(s => s.SupplierType == SupplierType.LegalPerson, () =>
             {
-
+                RuleFor(s => s.Document.Length).Equal(CnpjValidacao.TamanhoCnpj)
+               .WithMessage("O campo Documento precisa ter {ComparisonValue} caracteres e foi fornecido {PropertyValue}.");
+                RuleFor(s => CnpjValidacao.Validar(s.Document)).Equal(true)
+               .WithMessage("O documento fornecido é inválido.");
             });
         }
     }
