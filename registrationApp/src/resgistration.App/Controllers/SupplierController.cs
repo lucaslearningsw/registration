@@ -6,19 +6,20 @@ using resgistration.App.ViewModels;
 
 namespace resgistration.App.Controllers
 {
-    public class SupplierController : Controller
+    public class SupplierController : BaseController
     {
         private readonly IMapper _mapper;
         private readonly ISupplierRepository _supplierRepo;
-        private readonly IAddressRepository _addressRepo;
+        private readonly ISupplierService _supplierService;
 
         public SupplierController(ISupplierRepository supplierRepo,
                                   IMapper mapper,
-                                  IAddressRepository addressRepo)
+                                  ISupplierService supplierService,
+                                  INotificator notificator) : base(notificator)
         {
             _supplierRepo = supplierRepo;
             _mapper = mapper;
-            _addressRepo = addressRepo;
+            _supplierService = supplierService;
         }
 
         [Route("lista-de-fornecedores")]
@@ -57,7 +58,10 @@ namespace resgistration.App.Controllers
             }
             var supplier = _mapper.Map<Supplier>(supplierViewModel);
 
-            await _supplierRepo.CreateAsync(supplier);
+            await _supplierService.Create(supplier);
+
+            if (!OperationValid()) return View(supplierViewModel);
+
             return RedirectToAction("Index");
 
         }
@@ -99,7 +103,9 @@ namespace resgistration.App.Controllers
             if (!ModelState.IsValid) return View(supplierViewModel);
 
             var supplier = _mapper.Map<Supplier>(supplierViewModel);
-            await _supplierRepo.UpdateAsync(supplier);
+            await _supplierService.Update(supplier);
+
+            if (!OperationValid()) return View(await GetProductsSupplierAddress(id));
 
             return RedirectToAction("Index");
         }
@@ -128,7 +134,11 @@ namespace resgistration.App.Controllers
            var supplierViewModel = await GetProductsSupplierAddress(id);
             if (supplierViewModel == null) return NotFound();
 
-            await _supplierRepo.DeleteAsync(id);
+            await _supplierService.Delete(id);
+
+            if (!OperationValid()) return View(supplierViewModel);
+
+            TempData["Sucesso"] = "Fornecedor excluido com sucesso";
 
             return RedirectToAction("Index");
         }
@@ -157,7 +167,9 @@ namespace resgistration.App.Controllers
             if (!ModelState.IsValid) return PartialView("_UpdateAddress", supplierViewModel);
 
 
-            await _addressRepo.UpdateAsync(_mapper.Map<Address>(supplierViewModel.Address));
+            await _supplierService.UpdateAddress(_mapper.Map<Address>(supplierViewModel.Address));
+
+            if (!OperationValid()) return PartialView("_UpdateAddress", supplierViewModel);
 
             var url = Url.Action("GetAddress", "Supplier", new { id = supplierViewModel.Address.SupplierId });
 

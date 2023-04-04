@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace registration.Business.Interfaces
 {
-    public interface IProductService
+    public interface IProductService : IDisposable
     {
         Task Create(Product product);
         Task Update(Product product);

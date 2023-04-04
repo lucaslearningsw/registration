@@ -13,20 +13,24 @@ using resgistration.App.ViewModels;
 
 namespace resgistration.App.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
 
+        private readonly IProductService _productService;
         private readonly IProductRepository _productRepository;
         private readonly ISupplierRepository _supplierRepository;
         private readonly IMapper _mapper;
 
-        public ProductController(IProductRepository productRepository, 
+        public ProductController(IProductRepository productRepository,
                                  ISupplierRepository supplierRepository,
-                                 IMapper mapper)
+                                 IMapper mapper,
+                                 IProductService productService,
+                                 INotificator notificator) : base(notificator)
         {
             _productRepository = productRepository;
             _supplierRepository = supplierRepository;
             _mapper = mapper;
+            _productService = productService;
         }
 
 
@@ -71,7 +75,9 @@ namespace resgistration.App.Controllers
 
             productViewModel.Image = imgId + productViewModel.ImagemUpload.FileName;
 
-            await _productRepository.CreateAsync(_mapper.Map<Product>(productViewModel));
+            await _productService.Create(_mapper.Map<Product>(productViewModel));
+
+            if (!OperationValid()) return View(productViewModel);
 
             return RedirectToAction("Index");
         }
@@ -119,7 +125,9 @@ namespace resgistration.App.Controllers
             productUpdated.Price = productViewModel.Price;
             productUpdated.Active = productViewModel.Active;
 
-            await _productRepository.UpdateAsync(_mapper.Map<Product>(productUpdated));
+            await _productService.Update(_mapper.Map<Product>(productUpdated));
+
+            if (!OperationValid()) return View(productViewModel);
 
             return RedirectToAction("index");
         }
@@ -145,9 +153,12 @@ namespace resgistration.App.Controllers
 
             if (product == null) return NotFound();
 
-            await _productRepository.DeleteAsync(id);
+            await _productService.Delete(id);
 
-           
+           if(!OperationValid()) return View(product);
+
+            TempData["Sucesso"] = "Produto excluido com sucesso";
+
             return RedirectToAction("index");
         }
 

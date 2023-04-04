@@ -21,7 +21,7 @@ namespace registration.Business.Validations
                 .Length(2, 1000).WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
 
             RuleFor(p => p.Price)
-                .GreaterThan(0).WithMessage("O campo {PropertyName} precisa ser maior que {ComparisonValue}")
+                .GreaterThan(0).WithMessage("O campo {PropertyName} precisa ser maior que {ComparisonValue}");
         }
     }
 }
