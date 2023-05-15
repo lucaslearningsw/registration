@@ -4,15 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BasicMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using registration.Business.Interfaces;
 using resgistration.App.Data;
+using resgistration.App.Extensions;
 using resgistration.App.ViewModels;
 
 namespace resgistration.App.Controllers
 {
+    [Authorize]
     public class ProductController : BaseController
     {
 
@@ -34,12 +37,15 @@ namespace resgistration.App.Controllers
         }
 
 
+        [AllowAnonymous]
         [Route("lista-produto")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<ProductViewModel>>(await _productRepository.GetProductsSuppilers()));
         }
 
+
+        [AllowAnonymous]
         [Route("detalhes-produtos/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -52,6 +58,7 @@ namespace resgistration.App.Controllers
             return View(productViewModel);
         }
 
+        [ClaimsAuthorize("Product","Add")]
         [Route("novo-produto")]
         public async Task <IActionResult> Create()
         {
@@ -59,6 +66,7 @@ namespace resgistration.App.Controllers
             return View(productViewModel);  
         }
 
+        [ClaimsAuthorize("Product", "Add")]
         [Route("novo-produto")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -82,7 +90,7 @@ namespace resgistration.App.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [ClaimsAuthorize("Product", "Edit")]
         [Route("editar-produto/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -96,6 +104,8 @@ namespace resgistration.App.Controllers
             return View(productViewModel);
         }
 
+
+        [ClaimsAuthorize("Product", "Edit")]
         [Route("editar-produto/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -133,6 +143,7 @@ namespace resgistration.App.Controllers
         }
 
 
+        [ClaimsAuthorize("Product", "Delete")]
         [Route("excluir-produto/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -144,6 +155,7 @@ namespace resgistration.App.Controllers
 
         }
 
+        [ClaimsAuthorize("Product", "Delete")]
         [Route("excluir-produto/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

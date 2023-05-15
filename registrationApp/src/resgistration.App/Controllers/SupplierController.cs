@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
 using BasicMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using registration.Business.Interfaces;
+using resgistration.App.Extensions;
 using resgistration.App.ViewModels;
 
 namespace resgistration.App.Controllers
 {
+
+    [Authorize]
     public class SupplierController : BaseController
     {
         private readonly IMapper _mapper;
@@ -22,17 +26,20 @@ namespace resgistration.App.Controllers
             _supplierService = supplierService;
         }
 
+        [AllowAnonymous]
         [Route("lista-de-fornecedores")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<SupplierViewModel>>(await _supplierRepo.GetAllAsync()));
         }
 
+
+        [AllowAnonymous]
         [Route("dados-do-fornecedor/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
             var supplierViewModel = await GetSupplierAddress(id);
- 
+
             if (supplierViewModel == null)
             {
                 return NotFound();
@@ -41,12 +48,14 @@ namespace resgistration.App.Controllers
             return View(supplierViewModel);
         }
 
+        [ClaimsAuthorize("Supplier", "Add")]
         [Route("novo-fornecedor")]
         public IActionResult Create()
         {
             return View();
         }
 
+        [ClaimsAuthorize("Supplier", "Add")]
         [Route("novo-fornecedor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -66,6 +75,7 @@ namespace resgistration.App.Controllers
 
         }
 
+        [ClaimsAuthorize("Supplier", "Edit")]
         [Route("editar-fornecedor/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -79,6 +89,7 @@ namespace resgistration.App.Controllers
             return View(supplierViewModel);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> GetAddress(Guid id)
         {
             var supplier = await GetSupplierAddress(id);
@@ -93,9 +104,10 @@ namespace resgistration.App.Controllers
 
 
 
+        [ClaimsAuthorize("Supplier", "Edit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,SupplierViewModel supplierViewModel)
+        public async Task<IActionResult> Edit(Guid id, SupplierViewModel supplierViewModel)
         {
 
             if (id != supplierViewModel.Id) return NotFound();
@@ -110,8 +122,9 @@ namespace resgistration.App.Controllers
             return RedirectToAction("Index");
         }
 
-        [Route("excluir-fornecedor/{id:guid}")]
 
+        [ClaimsAuthorize("Supplier", "Delete")]
+        [Route("excluir-fornecedor/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
 
@@ -125,7 +138,9 @@ namespace resgistration.App.Controllers
             return View(supplierViewModel);
         }
 
-    
+
+
+        [ClaimsAuthorize("Supplier", "Delete")]
         [Route("excluir-fornecedor/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -144,9 +159,8 @@ namespace resgistration.App.Controllers
         }
 
 
-
+        [ClaimsAuthorize("Supplier", "Edit")]
         [Route("atualizar-endereco-fornecedor/{id:guid}")]
-
         public async Task<IActionResult> UpdateAddress(Guid id)
         {
             var supplier = await GetProductsSupplierAddress(id);
