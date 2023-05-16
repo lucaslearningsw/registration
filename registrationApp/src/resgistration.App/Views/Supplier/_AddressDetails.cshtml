@@ -1,5 +1,5 @@
-﻿ @model resgistration.App.ViewModels.SupplierViewModel
-
+﻿
+@model resgistration.App.ViewModels.SupplierViewModel
 <div style="padding-top: 20px">
     <div>
         <hr />
@@ -56,7 +56,7 @@
                 </td>
                
                 <td>
-                    <a asp-action="UpdateAddress" asp-route-id="@Model.Id" class="btn btn-info" data-modal="">
+                    <a supress-by-action="Edit,GetAddress" asp-action="UpdateAddress" asp-route-id="@Model.Id" class="btn btn-info" data-modal="">
                         <span title="Editar" class="fa fa-pencil-alt text-right"></span></a>
                 </td>
             </tr>
