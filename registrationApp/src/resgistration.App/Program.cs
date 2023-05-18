@@ -46,7 +46,6 @@ else
     app.UseStatusCodePagesWithRedirects("/error/{0}");
     app.UseHsts();
 
-
 }
 
 
