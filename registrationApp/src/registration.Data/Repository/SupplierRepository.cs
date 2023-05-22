@@ -14,7 +14,8 @@ namespace registration.Data.Repository
     public class SupplierRepository : Repository<Supplier>, ISupplierRepository
     {
         public SupplierRepository(registrationDbContext dbContext) : base(dbContext){ }
-      
+
+    
         public async Task<Supplier> GetProductsSupplierAddress(Guid id)
         {
 
@@ -31,6 +32,8 @@ namespace registration.Data.Repository
                 .FirstOrDefaultAsync(s => s.Id == id);
              
         }
+
+       
     } 
  }
 

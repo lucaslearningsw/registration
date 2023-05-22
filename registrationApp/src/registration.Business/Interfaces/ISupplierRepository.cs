@@ -11,5 +11,7 @@ namespace registration.Business.Interfaces
     {
         Task<Supplier> GetSupplierAddress(Guid id);
         Task<Supplier> GetProductsSupplierAddress(Guid id);
+
+      
     }
 }

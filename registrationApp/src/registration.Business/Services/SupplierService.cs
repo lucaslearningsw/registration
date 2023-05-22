@@ -58,7 +58,15 @@ namespace registration.Business.Services
                 return;
             }
 
-            await _supplierRepository.DeleteAsync(id);
+            if (_addressRepository.Find(a => a.SupplierId == id).Result.Any())
+            {
+                var address = _addressRepository.Find(a => a.SupplierId == id);
+                await _addressRepository.DeleteAsync(address.Result.FirstOrDefault().Id);
+                await _addressRepository.SaveChanges();
+            }
+
+                await _supplierRepository.DeleteAsync(id);
+
         }
 
         public void Dispose()

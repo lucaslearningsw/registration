@@ -52,11 +52,13 @@ namespace registration.Data.Repository
         public virtual async Task DeleteAsync(Guid id)
         {
             DbSet.Remove(new TEntity { Id = id });
+            await SaveChanges();
         }
 
         public async Task<int> SaveChanges()
         {
             return await Db.SaveChangesAsync();
+           
         }
 
       

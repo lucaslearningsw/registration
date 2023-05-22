@@ -5,14 +5,13 @@ namespace resgistration.App.Controllers
 {
     public class HomeController : Controller
     {
+
+       
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        
 
         [Route("error/{id:length(3,3)}")]
         public IActionResult Errors(int id)
