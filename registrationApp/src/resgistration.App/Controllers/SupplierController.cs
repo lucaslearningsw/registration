@@ -123,7 +123,7 @@ namespace resgistration.App.Controllers
         }
 
 
-        [ClaimsAuthorize("Supplier", "Delete")]
+       [ClaimsAuthorize("Supplier", "Delete")]
         [Route("excluir-fornecedor/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -135,7 +135,7 @@ namespace resgistration.App.Controllers
                 return NotFound();
             }
 
-            return View(supplierViewModel);
+            return PartialView("_Delete",supplierViewModel);
         }
 
 

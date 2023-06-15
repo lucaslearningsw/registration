@@ -43,9 +43,35 @@
             <td class="text-right">
                 <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></a>
                 <a class="btn btn-warning" disable-by-claim-name="Supplier" disable-by-claim-value="Edit" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
-                <a class="btn btn-danger" supress-by-claim-name="Supplier" supress-by-claim-value="Delete" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></a>
+                <a class="btn btn-danger" supress-by-claim-name="Supplier" supress-by-claim-value="Delete" asp-action="Delete" asp-controller="Supplier" asp-route-id="@item.Id" data-modal=""><spam class="fa fa-trash"></a>
             </td>
         </tr>
 }
   
 </table>
+
+
+<div id="AddressTarget">
+   
+</div>
+
+<div id="myModal" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="myModalContent"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            SetModal();
+        });
+    </script>
+}
